@@ -30,6 +30,7 @@ import {
   Upload,
   Mail,
   Smartphone,
+  Lock as LockIcon,
 } from 'lucide-react';
 
 const colorOptions = [
@@ -80,6 +81,16 @@ const premiumTemplates = [
     borderRadius: 'md',
     previewGradient: 'from-blue-600 to-cyan-500',
     accentColor: '#f97316'
+  },
+  {
+    id: 'minimal-gold',
+    name: 'Minimalist Gold',
+    description: 'Clean light theme with sophisticated gold accents',
+    primaryColor: '#b45309',
+    fontFamily: 'Open Sans',
+    borderRadius: 'sm',
+    previewGradient: 'from-amber-50 to-orange-100',
+    accentColor: '#b45309'
   }
 ];
 
@@ -101,6 +112,16 @@ export default function Settings() {
   // const isAdmin = user?.role === 'admin'; // TODO: Use for admin-only features
 
   const handleSaveBranding = () => {
+    if (demoTemplate) {
+      toast.error('Premium templates require a paid subscription to apply permanently.', {
+        description: 'Upgrade your plan to unlock all premium aesthetics.',
+        action: {
+          label: 'Upgrade Now',
+          onClick: () => toast.info('Redirecting to billing...')
+        }
+      });
+      return;
+    }
     toast.success('Branding settings saved');
   };
 
@@ -276,7 +297,10 @@ export default function Settings() {
                           {colorOptions.map((color) => (
                             <button
                               key={color.value}
-                              onClick={() => setTheme({ primaryColor: color.value })}
+                              onClick={() => {
+                                setTheme({ primaryColor: color.value });
+                                setDemoTemplate(null);
+                              }}
                               className={cn(
                                 'w-8 h-8 rounded-full transition-all duration-300 relative group',
                                 color.class,
@@ -301,7 +325,10 @@ export default function Settings() {
                         <Label className="text-sm font-semibold text-slate-700">Typography</Label>
                         <Select
                           value={theme.fontFamily}
-                          onValueChange={(value) => setTheme({ fontFamily: value })}
+                          onValueChange={(value) => {
+                            setTheme({ fontFamily: value });
+                            setDemoTemplate(null);
+                          }}
                         >
                           <SelectTrigger className="w-full bg-white/70 h-11 border-slate-200 font-medium">
                             <SelectValue />
@@ -353,15 +380,15 @@ export default function Settings() {
                         <Badge className="bg-amber-100 text-amber-700 border-amber-200">PRO FEATURE</Badge>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {premiumTemplates.map((template) => (
                           <div
                             key={template.id}
                             className={cn(
-                              "relative group cursor-pointer rounded-xl border-2 transition-all duration-300 overflow-hidden",
+                              "relative group cursor-pointer rounded-2xl border-2 transition-all duration-500 overflow-hidden",
                               demoTemplate === template.id
-                                ? "border-indigo-500 ring-2 ring-indigo-100"
-                                : "border-slate-100 hover:border-indigo-200"
+                                ? "border-indigo-500 ring-4 ring-indigo-50 shadow-lg scale-105 z-10"
+                                : "border-slate-100 hover:border-indigo-200 hover:shadow-md"
                             )}
                             onClick={() => {
                               setDemoTemplate(template.id);
@@ -370,22 +397,34 @@ export default function Settings() {
                                 fontFamily: template.fontFamily,
                                 borderRadius: template.borderRadius as any
                               });
+                              toast.info(`Previewing ${template.name} Template`, {
+                                description: 'Upgrade your plan to use this design in production.',
+                                icon: <Sparkles className="h-4 w-4 text-amber-500" />
+                              });
                             }}
                           >
-                            <div className={cn("h-20 bg-gradient-to-br", template.previewGradient)}>
-                              <div className="absolute top-2 right-2 p-1 bg-black/20 backdrop-blur-md rounded-md">
-                                <Lock className="h-3 w-3 text-white" />
+                            <div className={cn("h-24 bg-gradient-to-br bg-cover bg-center transition-transform duration-700 group-hover:scale-110", template.previewGradient)}>
+                              <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
+                              <div className="absolute top-3 right-3 p-1.5 bg-white/90 backdrop-blur-md rounded-lg shadow-sm border border-slate-100">
+                                <LockIcon className="h-3.5 w-3.5 text-indigo-600" />
                               </div>
                             </div>
-                            <div className="p-3 bg-white">
-                              <h5 className="font-bold text-xs text-slate-800">{template.name}</h5>
-                              <p className="text-[10px] text-slate-500 mt-1 line-clamp-1">{template.description}</p>
+                            <div className="p-4 bg-white">
+                              <div className="flex items-center justify-between mb-1">
+                                <h5 className="font-bold text-sm text-slate-900">{template.name}</h5>
+                                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: template.primaryColor }} />
+                              </div>
+                              <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2">{template.description}</p>
                             </div>
 
-                            {/* Locked Overlay */}
-                            <div className="absolute inset-x-0 bottom-0 bg-slate-900/10 backdrop-blur-[1px] h-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                              <Button variant="secondary" size="sm" className="h-7 text-[10px] font-black bg-white/90 hover:bg-white text-slate-900 shadow-xl">
-                                PREVIEW
+                            {/* Premium Interactive Overlay */}
+                            <div className="absolute inset-0 bg-indigo-600/0 group-hover:bg-indigo-600/5 transition-all duration-500 flex items-center justify-center pointer-events-none">
+                              <Button
+                                variant="secondary"
+                                size="sm"
+                                className="h-8 text-xs font-black bg-white shadow-xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 border-indigo-100"
+                              >
+                                {demoTemplate === template.id ? 'ACTIVE PREVIEW' : 'DEMO PREVIEW'}
                               </Button>
                             </div>
                           </div>
