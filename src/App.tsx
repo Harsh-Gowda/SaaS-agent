@@ -22,8 +22,6 @@ import Settings from '@/components/settings/Settings';
 import Analytics from '@/components/analytics/Analytics';
 import ActivityLog from '@/components/activity/ActivityLog';
 
-// Landing Page
-import LandingPage from '@/sections/LandingPage';
 
 import './App.css';
 
@@ -41,7 +39,13 @@ function AppContent() {
   // Show login form if not authenticated
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-50 via-indigo-50/30 to-slate-100 flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Abstract background shapes */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-200/20 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-200/20 rounded-full blur-[120px]" />
+        </div>
+
         <LoginForm />
         <Toaster position="top-right" richColors />
       </div>
@@ -80,13 +84,12 @@ function AppContent() {
       <Sidebar />
 
       {/* Main Content */}
-      <div 
-        className={`flex-1 flex flex-col transition-all duration-300 ${
-          sidebarOpen ? 'ml-64' : 'ml-16'
-        }`}
+      <div
+        className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-16'
+          }`}
       >
         <Header />
-        
+
         <main className="flex-1 p-6 overflow-auto">
           {state.isLoading ? (
             <div className="flex items-center justify-center h-full">
@@ -96,7 +99,7 @@ function AppContent() {
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
                 <p className="text-red-500 text-lg">{state.error}</p>
-                <button 
+                <button
                   onClick={() => window.location.reload()}
                   className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
                 >

@@ -128,17 +128,28 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full max-w-md relative">
+      {/* Decorative Background Elements */}
+      <div className="absolute -top-24 -left-24 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+
       {/* Brand Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-4">
-          <span className="text-white font-bold text-xl">DF</span>
+      <div className="text-center mb-10 relative z-10">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-500 to-purple-600 mb-6 shadow-xl shadow-indigo-200/50 transform hover:scale-105 transition-transform duration-300">
+          <span className="text-white font-black text-2xl tracking-tighter">DF</span>
         </div>
-        <h1 className="text-2xl font-bold text-slate-900">DataFlow</h1>
-        <p className="text-slate-500">Intelligent SaaS Solution</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+          Data<span className="text-indigo-600">Flow</span>
+        </h1>
+        <div className="flex items-center justify-center gap-2">
+          <span className="h-px w-8 bg-slate-200" />
+          <p className="text-slate-500 font-medium text-sm tracking-wide uppercase">Intelligent SaaS Solution</p>
+          <span className="h-px w-8 bg-slate-200" />
+        </div>
       </div>
 
-      <Card className="w-full shadow-xl border-slate-200/60 bg-white/80 backdrop-blur-sm">
+      <Card className="w-full shadow-[0_20px_50px_rgba(8,_112,_184,_0.1)] border-white/40 bg-white/70 backdrop-blur-xl relative z-10 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 animate-gradient-x" />
 
         <Tabs defaultValue="login" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
