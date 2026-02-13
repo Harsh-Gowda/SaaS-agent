@@ -454,68 +454,208 @@ export default function Settings() {
                   </div>
                 </CardHeader>
                 <CardContent className="p-0">
-                  {/* Mock UI Preview */}
-                  <div className="bg-white aspect-[4/3] relative flex flex-col overflow-hidden">
-                    {/* Mock Toolbar */}
-                    <div className="h-10 border-b border-slate-100 flex items-center px-4 gap-4 bg-slate-50/30">
-                      <div className="w-3 h-3 rounded-full bg-red-400" />
-                      <div className="w-3 h-3 rounded-full bg-amber-400" />
-                      <div className="w-3 h-3 rounded-full bg-green-400" />
-                    </div>
-
-                    <div className="flex-1 flex overflow-hidden">
-                      {/* Mock Sidebar */}
-                      <div className="w-16 border-r border-slate-100 bg-slate-900 flex flex-col items-center py-4 gap-4">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: theme.primaryColor }}>
-                          <span className="text-white font-black text-xs">DF</span>
-                        </div>
-                        <div className="w-8 h-1 bg-slate-700 rounded-full" />
-                        <div className="w-8 h-8 rounded-lg bg-slate-800" />
-                        <div className="w-8 h-8 rounded-lg bg-slate-800" />
+                  {/* Dynamic Layout Preview Based on Template */}
+                  {demoTemplate === 'dark-obsidian' ? (
+                    // DARK OBSIDIAN: Sidebar-right, dark mode, neon accents
+                    <div className="bg-slate-900 aspect-[4/3] relative flex flex-col overflow-hidden">
+                      <div className="h-10 border-b border-slate-800 flex items-center px-4 gap-4 bg-slate-950">
+                        <div className="w-3 h-3 rounded-full bg-red-500" />
+                        <div className="w-3 h-3 rounded-full bg-amber-500" />
+                        <div className="w-3 h-3 rounded-full bg-green-500" />
                       </div>
-
-                      {/* Mock Content */}
-                      <div className="flex-1 p-6 space-y-4" style={{ fontFamily: theme.fontFamily }}>
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-lg font-black text-slate-800 tracking-tight">
-                            {brandingData.companyName || 'Your Brand'}
-                          </h3>
-                          <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200" />
+                      <div className="flex-1 flex overflow-hidden">
+                        <div className="flex-1 p-6 space-y-4" style={{ fontFamily: theme.fontFamily }}>
+                          <div className="flex items-center justify-between mb-2">
+                            <h3 className="text-lg font-black text-white tracking-tight">{brandingData.companyName || 'Your Brand'}</h3>
+                            <div className="w-8 h-8 rounded-full bg-slate-800 border-2 border-purple-500" />
+                          </div>
+                          <div className="space-y-2">
+                            <div className="h-2 w-3/4 bg-slate-800 rounded-full" />
+                            <div className="h-2 w-1/2 bg-slate-800 rounded-full" />
+                          </div>
+                          <div className="pt-4 grid grid-cols-2 gap-3">
+                            <div className="h-20 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-none p-3 flex items-end">
+                              <span className="text-white text-[10px] font-bold">Analytics</span>
+                            </div>
+                            <div className="h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-none p-3 flex items-end">
+                              <span className="text-white text-[10px] font-bold">Revenue</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="space-y-2">
-                          <div className="h-2 w-3/4 bg-slate-100 rounded-full" />
-                          <div className="h-2 w-1/2 bg-slate-100 rounded-full" />
+                        <div className="w-16 border-l border-slate-800 bg-slate-950 flex flex-col items-center py-4 gap-4">
+                          <div className="w-8 h-8 rounded-none bg-purple-600 flex items-center justify-center mb-4">
+                            <span className="text-white font-black text-xs">DF</span>
+                          </div>
+                          <div className="w-8 h-1 bg-purple-500 rounded-full" />
+                          <div className="w-8 h-8 rounded-none bg-slate-800" />
+                          <div className="w-8 h-8 rounded-none bg-slate-800" />
                         </div>
-
-                        <div className="pt-4 flex flex-col gap-3">
-                          <Button
-                            className="w-full text-xs font-bold h-9 shadow-md transition-all active:scale-95"
-                            style={{
-                              backgroundColor: theme.primaryColor,
-                              borderRadius: theme.borderRadius === 'none' ? '0' :
-                                theme.borderRadius === 'sm' ? '4px' :
-                                  theme.borderRadius === 'md' ? '8px' :
-                                    theme.borderRadius === 'lg' ? '12px' :
-                                      theme.borderRadius === 'xl' ? '16px' : '9999px'
-                            }}
-                          >
+                      </div>
+                      <div className="p-4 bg-slate-950 border-t border-purple-500/30">
+                        <div className="text-[10px] text-purple-400 font-bold text-center">DARK OBSIDIAN THEME</div>
+                      </div>
+                    </div>
+                  ) : demoTemplate === 'glass-orchid' ? (
+                    // GLASS ORCHID: Centered cards, glassmorphism, soft gradients
+                    <div className="bg-gradient-to-br from-fuchsia-100 via-purple-50 to-pink-100 aspect-[4/3] relative flex flex-col overflow-hidden">
+                      <div className="h-10 border-b border-white/40 backdrop-blur-md flex items-center px-4 gap-4 bg-white/30">
+                        <div className="w-3 h-3 rounded-full bg-red-400" />
+                        <div className="w-3 h-3 rounded-full bg-amber-400" />
+                        <div className="w-3 h-3 rounded-full bg-green-400" />
+                      </div>
+                      <div className="flex-1 flex items-center justify-center p-6">
+                        <div className="w-full max-w-[200px] space-y-3">
+                          <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-2xl p-4 shadow-xl">
+                            <div className="flex items-center gap-3 mb-3">
+                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center">
+                                <span className="text-white font-black text-xs">DF</span>
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-xs font-black text-slate-800" style={{ fontFamily: theme.fontFamily }}>{brandingData.companyName || 'Your Brand'}</h3>
+                                <div className="h-1 w-12 bg-pink-200 rounded-full mt-1" />
+                              </div>
+                            </div>
+                            <div className="space-y-2">
+                              <div className="h-1.5 w-full bg-white/60 rounded-full" />
+                              <div className="h-1.5 w-3/4 bg-white/60 rounded-full" />
+                            </div>
+                          </div>
+                          <button className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-bold py-2.5 rounded-2xl shadow-lg">
                             Primary Action
-                          </Button>
-                          <div className="flex items-center gap-2">
-                            <div className="h-px bg-slate-100 flex-1" />
-                            <span className="text-[10px] text-slate-300 font-bold uppercase">Accent</span>
-                            <div className="h-px bg-slate-100 flex-1" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="p-4 bg-white/30 backdrop-blur-md border-t border-white/40">
+                        <div className="text-[10px] text-purple-600 font-bold text-center">GLASS ORCHID THEME</div>
+                      </div>
+                    </div>
+                  ) : demoTemplate === 'oceanic-pro' ? (
+                    // OCEANIC PRO: Traditional enterprise layout, clean and professional
+                    <div className="bg-white aspect-[4/3] relative flex flex-col overflow-hidden">
+                      <div className="h-12 border-b border-slate-200 flex items-center px-4 gap-4 bg-gradient-to-r from-blue-600 to-cyan-500">
+                        <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+                          <span className="text-blue-600 font-black text-xs">DF</span>
+                        </div>
+                        <div className="flex-1" />
+                        <div className="w-6 h-6 rounded-md bg-white/20" />
+                        <div className="w-6 h-6 rounded-md bg-white/20" />
+                      </div>
+                      <div className="flex-1 flex overflow-hidden">
+                        <div className="w-20 border-r border-slate-200 bg-slate-50 flex flex-col items-center py-4 gap-3">
+                          <div className="w-10 h-10 rounded-md bg-blue-100 flex items-center justify-center">
+                            <div className="w-4 h-4 bg-blue-600 rounded-sm" />
                           </div>
-                          <div
-                            className="text-[10px] text-center font-bold"
-                            style={{ color: theme.primaryColor }}
-                          >
-                            Interactive link element
+                          <div className="w-10 h-10 rounded-md bg-slate-200" />
+                          <div className="w-10 h-10 rounded-md bg-slate-200" />
+                        </div>
+                        <div className="flex-1 p-6 space-y-4" style={{ fontFamily: theme.fontFamily }}>
+                          <h3 className="text-lg font-bold text-slate-800">{brandingData.companyName || 'Your Brand'}</h3>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="border-2 border-blue-200 rounded-md p-3 bg-blue-50">
+                              <div className="text-[10px] text-blue-600 font-bold">METRIC 1</div>
+                              <div className="text-xs font-black text-blue-900 mt-1">$12.5K</div>
+                            </div>
+                            <div className="border-2 border-cyan-200 rounded-md p-3 bg-cyan-50">
+                              <div className="text-[10px] text-cyan-600 font-bold">METRIC 2</div>
+                              <div className="text-xs font-black text-cyan-900 mt-1">+24%</div>
+                            </div>
+                          </div>
+                          <button className="w-full bg-blue-600 text-white text-xs font-bold py-2 rounded-md">
+                            Enterprise Action
+                          </button>
+                        </div>
+                      </div>
+                      <div className="p-3 bg-slate-50 border-t border-slate-200">
+                        <div className="text-[10px] text-blue-600 font-bold text-center">OCEANIC PRO THEME</div>
+                      </div>
+                    </div>
+                  ) : demoTemplate === 'minimal-gold' ? (
+                    // MINIMALIST GOLD: Ultra-clean, minimal sidebar, gold accents
+                    <div className="bg-amber-50 aspect-[4/3] relative flex flex-col overflow-hidden">
+                      <div className="h-8 border-b border-amber-100 flex items-center px-4 gap-4 bg-white">
+                        <div className="text-[10px] font-black text-amber-800" style={{ fontFamily: theme.fontFamily }}>{brandingData.companyName || 'YOUR BRAND'}</div>
+                        <div className="flex-1" />
+                        <div className="w-5 h-5 rounded-sm bg-amber-100" />
+                      </div>
+                      <div className="flex-1 flex overflow-hidden">
+                        <div className="w-12 border-r border-amber-100 bg-white flex flex-col items-center py-4 gap-4">
+                          <div className="w-6 h-6 rounded-sm bg-amber-600" />
+                          <div className="w-6 h-0.5 bg-amber-200" />
+                          <div className="w-6 h-6 rounded-sm bg-amber-100" />
+                        </div>
+                        <div className="flex-1 p-8 flex items-center justify-center">
+                          <div className="text-center space-y-4 max-w-[180px]">
+                            <div className="w-12 h-12 rounded-sm bg-gradient-to-br from-amber-400 to-orange-500 mx-auto" />
+                            <h3 className="text-sm font-black text-amber-900" style={{ fontFamily: theme.fontFamily }}>
+                              {brandingData.companyName || 'Your Brand'}
+                            </h3>
+                            <div className="space-y-2">
+                              <div className="h-1 w-full bg-amber-100 rounded-sm" />
+                              <div className="h-1 w-2/3 bg-amber-100 rounded-sm mx-auto" />
+                            </div>
+                            <button className="w-full bg-amber-700 text-white text-[10px] font-black py-2 rounded-sm tracking-wider">
+                              TAKE ACTION
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-2 bg-white border-t border-amber-100">
+                        <div className="text-[9px] text-amber-700 font-black text-center tracking-widest">MINIMALIST GOLD</div>
+                      </div>
+                    </div>
+                  ) : (
+                    // DEFAULT: Current branding (no premium template selected)
+                    <div className="bg-white aspect-[4/3] relative flex flex-col overflow-hidden">
+                      <div className="h-10 border-b border-slate-100 flex items-center px-4 gap-4 bg-slate-50/30">
+                        <div className="w-3 h-3 rounded-full bg-red-400" />
+                        <div className="w-3 h-3 rounded-full bg-amber-400" />
+                        <div className="w-3 h-3 rounded-full bg-green-400" />
+                      </div>
+                      <div className="flex-1 flex overflow-hidden">
+                        <div className="w-16 border-r border-slate-100 bg-slate-900 flex flex-col items-center py-4 gap-4">
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: theme.primaryColor }}>
+                            <span className="text-white font-black text-xs">DF</span>
+                          </div>
+                          <div className="w-8 h-1 bg-slate-700 rounded-full" />
+                          <div className="w-8 h-8 rounded-lg bg-slate-800" />
+                          <div className="w-8 h-8 rounded-lg bg-slate-800" />
+                        </div>
+                        <div className="flex-1 p-6 space-y-4" style={{ fontFamily: theme.fontFamily }}>
+                          <div className="flex items-center justify-between mb-2">
+                            <h3 className="text-lg font-black text-slate-800 tracking-tight">{brandingData.companyName || 'Your Brand'}</h3>
+                            <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200" />
+                          </div>
+                          <div className="space-y-2">
+                            <div className="h-2 w-3/4 bg-slate-100 rounded-full" />
+                            <div className="h-2 w-1/2 bg-slate-100 rounded-full" />
+                          </div>
+                          <div className="pt-4 flex flex-col gap-3">
+                            <Button
+                              className="w-full text-xs font-bold h-9 shadow-md transition-all active:scale-95"
+                              style={{
+                                backgroundColor: theme.primaryColor,
+                                borderRadius: theme.borderRadius === 'none' ? '0' :
+                                  theme.borderRadius === 'sm' ? '4px' :
+                                    theme.borderRadius === 'md' ? '8px' :
+                                      theme.borderRadius === 'lg' ? '12px' :
+                                        theme.borderRadius === 'xl' ? '16px' : '9999px'
+                              }}
+                            >
+                              Primary Action
+                            </Button>
+                            <div className="flex items-center gap-2">
+                              <div className="h-px bg-slate-100 flex-1" />
+                              <span className="text-[10px] text-slate-300 font-bold uppercase">Accent</span>
+                              <div className="h-px bg-slate-100 flex-1" />
+                            </div>
+                            <div className="text-[10px] text-center font-bold" style={{ color: theme.primaryColor }}>
+                              Interactive link element
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
                   <div className="p-6 bg-indigo-600">
                     <div className="flex items-center gap-4">
