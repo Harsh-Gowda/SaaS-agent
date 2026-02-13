@@ -50,6 +50,39 @@ const fontOptions = [
   { name: 'Open Sans', value: 'Open Sans' },
 ];
 
+const premiumTemplates = [
+  {
+    id: 'dark-obsidian',
+    name: 'Dark Obsidian',
+    description: 'Ultra-modern dark theme with neon accents',
+    primaryColor: '#8b5cf6',
+    fontFamily: 'Roboto',
+    borderRadius: 'none',
+    previewGradient: 'from-slate-900 to-slate-800',
+    accentColor: '#10b981'
+  },
+  {
+    id: 'glass-orchid',
+    name: 'Glass Orchid',
+    description: 'Soft translucent layers with elegant gradients',
+    primaryColor: '#ec4899',
+    fontFamily: 'Poppins',
+    borderRadius: 'xl',
+    previewGradient: 'from-fuchsia-500 to-purple-600',
+    accentColor: '#6366f1'
+  },
+  {
+    id: 'oceanic-pro',
+    name: 'Oceanic Pro',
+    description: 'Trustworthy and clean corporate aesthetic',
+    primaryColor: '#0ea5e9',
+    fontFamily: 'Inter',
+    borderRadius: 'md',
+    previewGradient: 'from-blue-600 to-cyan-500',
+    accentColor: '#f97316'
+  }
+];
+
 export default function Settings() {
   const { state } = useApp();
   const { theme, setTheme } = useTheme();
@@ -62,6 +95,8 @@ export default function Settings() {
     logo: state.tenant?.logo || '',
     favicon: state.tenant?.favicon || '',
   });
+
+  const [demoTemplate, setDemoTemplate] = useState<string | null>(null);
 
   // const isAdmin = user?.role === 'admin'; // TODO: Use for admin-only features
 
@@ -282,13 +317,16 @@ export default function Settings() {
                       </div>
                     </div>
 
-                    <div className="space-y-4 pt-4">
+                    <div className="space-y-4 pt-4 text-left">
                       <Label className="text-sm font-semibold text-slate-700">Interface Rounding</Label>
                       <div className="flex flex-wrap gap-2 p-1 bg-slate-100/50 rounded-xl border border-slate-200/40 w-fit">
                         {['none', 'sm', 'md', 'lg', 'xl', 'full'].map((radius) => (
                           <button
                             key={radius}
-                            onClick={() => setTheme({ borderRadius: radius as any })}
+                            onClick={() => {
+                              setTheme({ borderRadius: radius as any });
+                              setDemoTemplate(null);
+                            }}
                             className={cn(
                               'px-5 py-2 rounded-lg text-sm font-bold capitalize transition-all duration-200',
                               theme.borderRadius === radius
@@ -300,6 +338,60 @@ export default function Settings() {
                           </button>
                         ))}
                       </div>
+                    </div>
+
+                    <Separator className="bg-slate-100" />
+
+                    <div className="space-y-6 text-left">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                            <Sparkles className="h-4 w-4 text-amber-600" />
+                          </div>
+                          <h4 className="font-bold text-slate-800">Premium Templates</h4>
+                        </div>
+                        <Badge className="bg-amber-100 text-amber-700 border-amber-200">PRO FEATURE</Badge>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {premiumTemplates.map((template) => (
+                          <div
+                            key={template.id}
+                            className={cn(
+                              "relative group cursor-pointer rounded-xl border-2 transition-all duration-300 overflow-hidden",
+                              demoTemplate === template.id
+                                ? "border-indigo-500 ring-2 ring-indigo-100"
+                                : "border-slate-100 hover:border-indigo-200"
+                            )}
+                            onClick={() => {
+                              setDemoTemplate(template.id);
+                              setTheme({
+                                primaryColor: template.primaryColor,
+                                fontFamily: template.fontFamily,
+                                borderRadius: template.borderRadius as any
+                              });
+                            }}
+                          >
+                            <div className={cn("h-20 bg-gradient-to-br", template.previewGradient)}>
+                              <div className="absolute top-2 right-2 p-1 bg-black/20 backdrop-blur-md rounded-md">
+                                <Lock className="h-3 w-3 text-white" />
+                              </div>
+                            </div>
+                            <div className="p-3 bg-white">
+                              <h5 className="font-bold text-xs text-slate-800">{template.name}</h5>
+                              <p className="text-[10px] text-slate-500 mt-1 line-clamp-1">{template.description}</p>
+                            </div>
+
+                            {/* Locked Overlay */}
+                            <div className="absolute inset-x-0 bottom-0 bg-slate-900/10 backdrop-blur-[1px] h-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Button variant="secondary" size="sm" className="h-7 text-[10px] font-black bg-white/90 hover:bg-white text-slate-900 shadow-xl">
+                                PREVIEW
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-xs text-slate-400 font-medium italic">Selecting a premium template updates the preview for demo purposes. Upgrade to permanently apply.</p>
                     </div>
                   </div>
 
